@@ -12,7 +12,7 @@ from qrcode.image.styles.moduledrawers.pil import *
 from qrcode.image.styles.colormasks import *
 
 qr = qrcode.QRCode(image_factory=SvgPathImage, error_correction=qrcode.constants.ERROR_CORRECT_L)
-qr.add_data('https://bareblackfoot.github.io/TopologicalSemanticGraphMemory')
+qr.add_data('https://forms.gle/bhTP7gUvZgTC4PwA9')
 qr.make(fit=True)
 
 from PIL import Image, ImageDraw
@@ -40,8 +40,11 @@ qr_eyes_img = qr.make_image(image_factory=StyledPilImage,
                             color_mask=SolidFillColorMask(front_color=(186, 182, 206, 255), back_color=background_color),
                             module_drawer=CircleModuleDrawer(),
                             eye_drawer=RoundedModuleDrawer(radius_ratio=1))
+qr_img = qr_img.convert('RGBA')
+qr_eyes_img = qr_eyes_img.convert('RGBA')
 mask = style_eyes(qr_img)
 final_img = Image.composite(qr_eyes_img, qr_img, mask)
 
-with open('QR_TSGM_webpage_with_white_background.png', 'wb') as f:
+output_path = os.path.join(project_dir, 'QR_forms_gle_bhTP7gUvZgTC4PwA9.png')
+with open(output_path, 'wb') as f:
     final_img.save(f)
